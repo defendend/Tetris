@@ -5,6 +5,7 @@ import com.defendend.tetris.constants.CellConstants
 import com.defendend.tetris.constants.FieldConstants
 import com.defendend.tetris.helpers.array2dOfByte
 import com.defendend.tetris.storage.AppPreferences
+import com.defendend.tetris.models.Block.BlockColor
 
 class AppModel {
     var score: Int = 0
@@ -126,7 +127,7 @@ class AppModel {
             for (j in field[i].indices) {
                 var status = getCellStatus(i, j)
                 if (status == CellConstants.EPHEMERAL.value) {
-                    status = currentBlock?.staticValue
+                    status = currentBlock?.getStaticValue()
                     setCellStatus(i, j, status)
                 }
             }

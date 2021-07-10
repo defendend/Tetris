@@ -5,10 +5,10 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
-import android.util.AttributeSet
-import android.view.View
 import android.os.Handler
 import android.os.Message
+import android.util.AttributeSet
+import android.view.View
 import android.widget.Toast
 import com.defendend.tetris.GameActivity
 import com.defendend.tetris.R
@@ -90,7 +90,7 @@ class TetrisView : View {
         val cellStatus = model?.getCellStatus(row, col)
         if (CellConstants.EMPTY.value != cellStatus) {
             val color = if (CellConstants.EPHEMERAL.value == cellStatus) {
-                model?.currentBlock?.color
+                model?.currentBlock?.getColor()
             } else {
                 Block.getColor(cellStatus as Byte)
             }
