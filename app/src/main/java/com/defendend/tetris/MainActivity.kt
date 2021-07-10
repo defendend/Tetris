@@ -6,44 +6,47 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import com.defendend.tetris.databinding.ActivityMainBinding
 import com.defendend.tetris.storage.AppPreferences
 import com.google.android.material.snackbar.Snackbar
 import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
-
-    var tvHighScore: TextView? = null
+    private var binding: ActivityMainBinding? = null
+    private var preferences: AppPreferences? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding?.root)
 
-        supportActionBar?.hide()
-        val btnNewGame = findViewById<Button>(R.id.btn_new_game)
-        val btnResetScore = findViewById<Button>(R.id.btn_reset_score)
-        val btnExit = findViewById<Button>(R.id.btn_exit)
-
-        tvHighScore = findViewById(R.id.tv_high_score)
-
-        btnNewGame.setOnClickListener(this::onBtnNewGameClick)
-        btnResetScore.setOnClickListener(this::onBtnResetScoreClick)
-        btnExit.setOnClickListener(this::onBtnExitClick)
+        binding?.apply {
+            btnNewGame.setOnClickListener(::onBtnNewGameClick)
+            btnResetScore.setOnClickListener(::onBtnResetScoreClick)
+            btnExit.setOnClickListener(::onBtnExitClick)
+        }
+        preferences = AppPreferences(this)
+        binding?.tvHighScore?.text = getString(R.string.text_score, preferences?.getHighScore())
 
     }
 
-    private fun onBtnNewGameClick(view: View){
+    override fun onDestroy() {
+        binding = null
+        super.onDestroy()
+    }
+
+    private fun onBtnNewGameClick(view: View) {
         val intent = Intent(this, GameActivity::class.java)
         startActivity(intent)
     }
 
-    private fun onBtnResetScoreClick(view: View){
-        val preferences = AppPreferences(this)
-        preferences.clearHighScore()
-        Snackbar.make(view,R.string.successful_reset,Snackbar.LENGTH_SHORT).show()
-        tvHighScore?.text = getString(R.string.text_score,preferences.getHighScore())
+    private fun onBtnResetScoreClick(view: View) {
+        preferences?.clearHighScore()
+        Snackbar.make(view, R.string.successful_reset, Snackbar.LENGTH_SHORT).show()
+        binding?.tvHighScore?.text = getString(R.string.text_score, preferences?.getHighScore())
     }
 
-    private fun onBtnExitClick(view: View){
+    private fun onBtnExitClick(view: View) {
         exitProcess(0)
     }
 }
