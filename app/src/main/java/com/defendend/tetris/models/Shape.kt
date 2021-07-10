@@ -1,8 +1,5 @@
 package com.defendend.tetris.models
 
-import com.defendend.tetris.helpers.array2dOfByte
-import java.lang.IllegalArgumentException
-
 enum class Shape(val frameCount: Int, val startPosition: Int) {
     Tetromino1(1,1){
         override fun getFrame(frameNumber: Int): Frame {

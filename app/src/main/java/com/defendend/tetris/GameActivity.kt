@@ -3,14 +3,10 @@ package com.defendend.tetris
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.defendend.tetris.databinding.ActivityGameBinding
-import com.defendend.tetris.databinding.ActivityMainBinding
 import com.defendend.tetris.models.AppModel
 import com.defendend.tetris.storage.AppPreferences
-import com.defendend.tetris.views.TetrisView
 
 class GameActivity : AppCompatActivity() {
 
